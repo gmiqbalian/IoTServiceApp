@@ -17,14 +17,22 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             
-            <!-- close button -->
+            
+            
             <Grid Grid.Row="0">
-                <TextBlock FontFamily="{StaticResource FontAwesome-Regular}" 
-                           Text="&#xf0c9;"
-                           HorizontalAlignment="Right"
-                           FontSize="40"
-                           Foreground="White"
-                           Margin="0 30 40 0"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- title -->
+                <TextBlock Grid.Column="0" Text="Smart Home" FontSize="50" 
+                           VerticalAlignment="Center"
+                           Margin="60 0 0 0"
+                           Foreground="White"/>
+
+                <!-- close button -->
+                <Button Grid.Column="1" Style="{StaticResource SettingsButton}"/>
             </Grid>
             
             <!-- main -->
@@ -85,6 +93,7 @@
                             HorizontalAlignment="Center"
                             Margin="0 40 0 40">
 
+                    <Button Style="{StaticResource DeviceTile}"/>
                     <Button Style="{StaticResource DeviceTile}"/>
                     <Button Style="{StaticResource DeviceTile}"/>
                     <Button Style="{StaticResource DeviceTile}"/>
