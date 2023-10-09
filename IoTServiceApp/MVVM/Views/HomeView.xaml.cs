@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IoTServiceApp.MVVM.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,16 +14,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace IoTServiceApp.MVVM.Views
-{
-    /// <summary>
-    /// Interaction logic for HomeView.xaml
-    /// </summary>
-    public partial class HomeView : Page
+namespace IoTServiceApp.MVVM.Views 
+{ 
+    public partial class HomeView : UserControl
     {
         public HomeView()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

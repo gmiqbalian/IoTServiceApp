@@ -4,102 +4,23 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IoTServiceApp"
+        xmlns:viewmodels="clr-namespace:IoTServiceApp.MVVM.ViewModels"
+        xmlns:views="clr-namespace:IoTServiceApp.MVVM.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="720" Width="1280">
     <Grid>
         <Image Source="Assets/Images/background.jpg"
                Stretch="Fill"/>
-        <Rectangle Fill="CornflowerBlue" Opacity="0.80"/>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
-            
-            
-            
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="auto"/>
-                </Grid.ColumnDefinitions>
+        <ContentControl Content="{Binding CurrentViewModel}">
+            <ContentControl.Resources>
+                <DataTemplate DataType="{x:Type viewmodels:HomeViewModel}">
+                    <views:HomeView/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewmodels:SettingsViewModel}">
+                    <views:SettingsView/>
+                </DataTemplate>
+            </ContentControl.Resources>
+        </ContentControl>
 
-                <!-- title -->
-                <TextBlock Grid.Column="0" Text="Smart Home" FontSize="50" 
-                           VerticalAlignment="Center"
-                           Margin="60 0 0 0"
-                           Foreground="White"/>
-
-                <!-- close button -->
-                <Button Grid.Column="1" Style="{StaticResource SettingsButton}"/>
-            </Grid>
-            
-            <!-- main -->
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-
-                <!-- date, time, and weather-->
-                <Grid Grid.Column="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-
-                    <!-- weather -->
-                    <Grid Grid.Row="0">
-                        <StackPanel Orientation="Horizontal" Margin="80 80 0 0">
-                            <TextBlock FontFamily="{StaticResource FontAwesome-Regular}" 
-                                    Text="&#xf0c2;"
-                                    FontSize="80"
-                                    Foreground="white"/>
-                            
-                            <TextBlock Text="14°C" FontSize="60" Foreground="White"/>
-                        </StackPanel>
-                    </Grid>
-                    
-                    <!-- date and time -->
-                    <Grid Grid.Row="1">
-                        <StackPanel Orientation="Vertical" Margin="80 -40 0 0">
-                            <TextBlock Foreground="White"
-                               Text="00:00"
-                               FontSize="80"/>
-
-                            <TextBlock 
-                                Text="Monday 08, 2023" FontSize="60" Foreground="White"/>
-                        </StackPanel>
-                    </Grid>
-
-                </Grid>
-                
-                <!--home icon-->
-                <Grid Grid.Column="1">
-                    <TextBlock Text="&#xf015;" FontFamily="{StaticResource FontAwesome-Light}" 
-                               FontSize="250" 
-                               Background="Transparent"
-                               Foreground="White"
-                               HorizontalAlignment="Center" 
-                               Margin="0 90 0 0"/>
-                </Grid>
-            </Grid>
-            
-            <!-- devices list -->
-            <Grid Grid.Row="2">
-                <StackPanel Orientation="Horizontal" 
-                            VerticalAlignment="Center" 
-                            HorizontalAlignment="Center"
-                            Margin="0 40 0 40">
-
-                    <Button Style="{StaticResource DeviceTile}"/>
-                    <Button Style="{StaticResource DeviceTile}"/>
-                    <Button Style="{StaticResource DeviceTile}"/>
-                    <Button Style="{StaticResource DeviceTile}"/>
-                </StackPanel>
-            </Grid>
-        </Grid>
-        
     </Grid>
 </Window>

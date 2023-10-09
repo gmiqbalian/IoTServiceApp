@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IoTServiceApp.MVVM.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,10 +16,7 @@ using System.Windows.Shapes;
 
 namespace IoTServiceApp.MVVM.Views
 {
-    /// <summary>
-    /// Interaction logic for SettingsView.xaml
-    /// </summary>
-    public partial class SettingsView : Page
+    public partial class SettingsView : UserControl
     {
         public SettingsView()
         {

@@ -55,7 +55,11 @@
 
   <ItemGroup>
     <Folder Include="MVVM\Models\" />
-    <Folder Include="MVVM\ViewModels\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
   </ItemGroup>
 
 </Project>
