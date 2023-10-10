@@ -12,6 +12,7 @@ public partial class MainWindowViewModel : ObservableObject
     {
         _serviceProvider = serviceProvider;
         CurrentViewModel = _serviceProvider.GetRequiredService<HomeViewModel>();
+        
     }
 
     [ObservableProperty]

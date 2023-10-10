@@ -1,5 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:models="clr-namespace:IoTServiceApp.MVVM.Models"
+                    xmlns:viewmodels="clr-namespace:IoTServiceApp.MVVM.ViewModels">
 
     <Style x:Key="DeviceTile" TargetType="Button">
         <Setter Property="Background" Value="#51a9f0" />
@@ -21,6 +23,32 @@
                         Background="{TemplateBinding Background}"
                         CornerRadius="10"
                         BorderBrush="Transparent">
+                        <ContentPresenter Content="{Binding}"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center">
+                            <ContentPresenter.ContentTemplate>
+                                <DataTemplate DataType="{x:Type viewmodels:DeviceInfoViewModel}">
+                                    <Grid>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding DeviceInfo.Icon, FallbackValue=&#xf2db;}"
+                                                       FontFamily="{StaticResource FontAwesome-Regular}"
+                                                       FontSize="80"
+                                                       Foreground="White"
+                                                       VerticalAlignment="Center"
+                                                       HorizontalAlignment="Center"/>
+                                            <TextBlock Text="{Binding DeviceInfo.Type, FallbackValue=UnknownDevice}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       Foreground="White"/>
+                                            <TextBlock Text="{Binding DeviceInfo.Id, FallbackValue=UnknownId}"
+                                                       HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="White"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </ContentPresenter.ContentTemplate>
+                        </ContentPresenter>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

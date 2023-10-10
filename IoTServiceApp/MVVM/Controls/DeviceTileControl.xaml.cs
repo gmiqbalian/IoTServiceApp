@@ -1,6 +1,4 @@
 ﻿using IoTServiceApp.MVVM.ViewModels;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,14 +14,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace IoTServiceApp.MVVM.Views 
-{ 
-    public partial class HomeView : UserControl
+namespace IoTServiceApp.MVVM.Controls
+{
+    /// <summary>
+    /// Interaction logic for DeviceTileControl.xaml
+    /// </summary>
+    public partial class DeviceTileControl : UserControl
     {
-        public HomeView()
+        public DeviceTileControl()
         {
             InitializeComponent();
-
+            this.DataContext = this;
         }
     }
 }

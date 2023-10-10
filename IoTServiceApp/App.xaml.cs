@@ -6,6 +6,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using IoTServiceApp.MVVM.ViewModels;
+using IoTServiceApp.MVVM.Views;
+using IoTServiceApp.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -19,10 +21,19 @@ namespace IoTServiceApp
             _appHost = Host.CreateDefaultBuilder()
                 .ConfigureServices(services =>
                 {
+                    services.AddSingleton<IoTHubManager>();
+                    services.AddSingleton<DeviceInfoViewModel>();
+
                     services.AddSingleton<MainWindow>();
                     services.AddSingleton<MainWindowViewModel>();
-                    services.AddSingleton<SettingsViewModel>();
+
+                    services.AddSingleton<HomeView>();
                     services.AddSingleton<HomeViewModel>();
+                    
+                    services.AddSingleton<SettingsView>();
+                    services.AddSingleton<SettingsViewModel>();
+
+                    services.AddSingleton<DeviceInfoViewModel>();
                 })
                 .Build();
         }

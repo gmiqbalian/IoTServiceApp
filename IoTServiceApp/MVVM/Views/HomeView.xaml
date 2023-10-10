@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:IoTServiceApp.MVVM.Views"
              xmlns:viewmodels="clr-namespace:IoTServiceApp.MVVM.ViewModels"
+             xmlns:controls="clr-namespace:IoTServiceApp.MVVM.Controls"
              d:DataContext="{d:DesignInstance Type=viewmodels:HomeViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1280">
@@ -28,7 +29,7 @@
                 <!-- title -->
                 <TextBlock Grid.Column="0" Text="Smart Home" FontSize="50" 
                    VerticalAlignment="Center"
-                   Margin="60 0 0 0"
+                   Margin="60 10 0 0"
                    Foreground="White"/>
 
                 <!-- close button -->
@@ -66,11 +67,11 @@
                     <Grid Grid.Row="1">
                         <StackPanel Orientation="Vertical" Margin="80 -40 0 0">
                             <TextBlock Foreground="White"
-                       Text="00:00"
-                       FontSize="80"/>
+                               Text="00:00"
+                               FontSize="80"/>
 
                             <TextBlock 
-                        Text="Monday 08, 2023" FontSize="60" Foreground="White"/>
+                                Text="Monday 08, 2023" FontSize="60" Foreground="White"/>
                         </StackPanel>
                     </Grid>
 
@@ -88,17 +89,24 @@
             </Grid>
 
             <!-- devices list -->
-            <Grid Grid.Row="2">
-                <StackPanel Orientation="Horizontal" 
-                    VerticalAlignment="Center" 
-                    HorizontalAlignment="Center"
-                    Margin="0 40 0 40">
+            <Grid Grid.Row="2" Margin="0 40 0 40">
 
-                    <Button Style="{StaticResource DeviceTile}"/>
-                    <Button Style="{StaticResource DeviceTile}"/>
-                    <Button Style="{StaticResource DeviceTile}"/>
-                    <Button Style="{StaticResource DeviceTile}"/>
-                </StackPanel>
+                <ItemsControl x:Name="DeviceList" 
+                        ItemsSource="{Binding Devices}" 
+                        Foreground="White">
+                    
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <controls:DeviceTileControl/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </Grid>
         </Grid>
     </Grid>
