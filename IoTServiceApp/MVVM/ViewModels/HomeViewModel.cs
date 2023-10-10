@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace IoTServiceApp.MVVM.ViewModels;
 
@@ -14,18 +15,38 @@ public partial class HomeViewModel : ObservableObject
 {
     private readonly IServiceProvider _serviceProvider;
     private readonly IoTHubManager _iotManager;
+    private readonly DateAndTimeService _dateAndTimeService;
+    private readonly WeatherService _weatherService;
+    
+    [ObservableProperty]
+    private string? _time;
+    
+    [ObservableProperty]
+    private string? _date;
+    
+    [ObservableProperty]
+    private string? _outsideTemp;
+    
+    [ObservableProperty]
+    private string? _weatherIcon;
 
     [ObservableProperty]
     ObservableCollection<DeviceInfoViewModel> devices;
 
-    public HomeViewModel(IServiceProvider serviceProvider, IoTHubManager iotHubManager)
+    public HomeViewModel(IServiceProvider serviceProvider, 
+        IoTHubManager iotHubManager, 
+        DateAndTimeService dateAndTimeService, 
+        WeatherService weatherService)
     {
         _serviceProvider = serviceProvider;
         _iotManager = iotHubManager;
+        _dateAndTimeService = dateAndTimeService;
+        _weatherService = weatherService;
 
         GetAllDevices();
+        GetDateAndTime();
+        GetWeatherData();
         _iotManager.DeviceListUpdated += GetAllDevices;
-        
     }
 
     [RelayCommand]
@@ -48,5 +69,21 @@ public partial class HomeViewModel : ObservableObject
         //    new DeviceInfo {Id="tv"},
         //    new DeviceInfo {Id="speakers"},
         //};
+    }
+    private void GetDateAndTime()
+    {
+        _dateAndTimeService.TimeUpdated += () =>
+        {
+            Time = _dateAndTimeService.Time;
+            Date = _dateAndTimeService.Date;
+        };
+    }
+    private void GetWeatherData()
+    {
+        _weatherService.WeatheUpdated += () =>
+        {
+            OutsideTemp = _weatherService.OutsideTemp;
+            WeatherIcon = _weatherService.WeatherIcon;
+        };
     }
 }

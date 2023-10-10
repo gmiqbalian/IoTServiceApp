@@ -14,7 +14,7 @@ namespace IoTServiceApp.Services;
 public class IoTHubManager
 {
     private readonly RegistryManager _registryManager;
-    private SystemTimer timer;
+    private SystemTimer _timer;
     public List<DeviceInfo> DeviceList { get; private set; }
     public event Action DeviceListUpdated;
     public IoTHubManager()
@@ -25,9 +25,9 @@ public class IoTHubManager
 
         Task.Run(GetAllDevicesFromCloudAsync);
 
-        //timer = new Timer(1000);
-        //timer.Elapsed += async (s, e) => await GetAllDevicesFromCloudAsync();
-        //timer.Start();
+        _timer = new Timer(1000);
+        _timer.Elapsed += async (s, e) => await GetAllDevicesFromCloudAsync();
+        _timer.Start();
 
     }
     public async Task GetAllDevicesFromCloudAsync()

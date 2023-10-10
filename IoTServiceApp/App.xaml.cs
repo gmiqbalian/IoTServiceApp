@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows;
+using IoTServiceApp.MVVM.Controls;
 using IoTServiceApp.MVVM.ViewModels;
 using IoTServiceApp.MVVM.Views;
 using IoTServiceApp.Services;
@@ -21,19 +23,16 @@ namespace IoTServiceApp
             _appHost = Host.CreateDefaultBuilder()
                 .ConfigureServices(services =>
                 {
+                    services.AddSingleton<DateAndTimeService>();
+                    services.AddSingleton<WeatherService>();
                     services.AddSingleton<IoTHubManager>();
-                    services.AddSingleton<DeviceInfoViewModel>();
+                    services.AddSingleton<HttpClient>();
 
                     services.AddSingleton<MainWindow>();
-                    services.AddSingleton<MainWindowViewModel>();
-
-                    services.AddSingleton<HomeView>();
-                    services.AddSingleton<HomeViewModel>();
                     
-                    services.AddSingleton<SettingsView>();
+                    services.AddSingleton<MainWindowViewModel>();
+                    services.AddSingleton<HomeViewModel>();
                     services.AddSingleton<SettingsViewModel>();
-
-                    services.AddSingleton<DeviceInfoViewModel>();
                 })
                 .Build();
         }

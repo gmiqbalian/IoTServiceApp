@@ -10,7 +10,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1280">
     <Grid>
-        <Rectangle Fill="CornflowerBlue" Opacity="0.80"/>
+        <Rectangle Fill="Black" Opacity="0.80"/>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
@@ -19,7 +19,7 @@
             </Grid.RowDefinitions>
 
 
-
+            <!-- header -->
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -29,7 +29,7 @@
                 <!-- title -->
                 <TextBlock Grid.Column="0" Text="Smart Home" FontSize="50" 
                    VerticalAlignment="Center"
-                   Margin="60 10 0 0"
+                   Margin="80 10 0 0"
                    Foreground="White"/>
 
                 <!-- close button -->
@@ -51,41 +51,16 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                    <!-- weather -->
-                    <Grid Grid.Row="0">
-                        <StackPanel Orientation="Horizontal" Margin="80 80 0 0">
-                            <TextBlock FontFamily="{StaticResource FontAwesome-Regular}" 
-                            Text="&#xf0c2;"
-                            FontSize="80"
-                            Foreground="white"/>
-
-                            <TextBlock Text="14°C" FontSize="60" Foreground="White"/>
-                        </StackPanel>
-                    </Grid>
-
                     <!-- date and time -->
-                    <Grid Grid.Row="1">
-                        <StackPanel Orientation="Vertical" Margin="80 -40 0 0">
-                            <TextBlock Foreground="White"
-                               Text="00:00"
-                               FontSize="80"/>
+                    <controls:WeatherControl Grid.Row="0"/>
 
-                            <TextBlock 
-                                Text="Monday 08, 2023" FontSize="60" Foreground="White"/>
-                        </StackPanel>
-                    </Grid>
-
+                    <!-- weather -->
+                    <controls:DateAndTimeControl Grid.Row="1"/>
                 </Grid>
 
                 <!--home icon-->
-                <Grid Grid.Column="1">
-                    <TextBlock Text="&#xf015;" FontFamily="{StaticResource FontAwesome-Light}" 
-                       FontSize="250" 
-                       Background="Transparent"
-                       Foreground="White"
-                       HorizontalAlignment="Center" 
-                       Margin="0 90 0 0"/>
-                </Grid>
+                <controls:HomeIconControl Grid.Column="1" />
+                
             </Grid>
 
             <!-- devices list -->
@@ -94,7 +69,7 @@
                 <ItemsControl x:Name="DeviceList" 
                         ItemsSource="{Binding Devices}" 
                         Foreground="White">
-                    
+
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center"/>

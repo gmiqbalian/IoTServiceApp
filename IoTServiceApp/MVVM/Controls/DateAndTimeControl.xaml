@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="IoTServiceApp.MVVM.Controls.DateAndTimeControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:IoTServiceApp.MVVM.Controls"
+             xmlns:viewmodels="clr-namespace:IoTServiceApp.MVVM.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewmodels:HomeViewModel}"
+             mc:Ignorable="d">
+        
+    
+            <StackPanel Orientation="Vertical" Margin="80 0 0 0">
+                <TextBlock Text="{Binding Date}" FontSize="60" Foreground="White"/>
+
+                <TextBlock Foreground="White" Text="{Binding Time, FallbackValue=--:--}" FontSize="40"/>
+            </StackPanel>
+            
+</UserControl>

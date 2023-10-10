@@ -6,8 +6,8 @@
     <Style x:Key="DeviceTile" TargetType="Button">
         <Setter Property="Background" Value="#51a9f0" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Width" Value="140" />
-        <Setter Property="Height" Value="140" />
+        <Setter Property="Width" Value="180" />
+        <Setter Property="Height" Value="180" />
         <Setter Property="Margin" Value="10 0 10 0" />
         <Setter Property="Padding" Value="10" />
         <Setter Property="Opacity" Value="0.80"/>
@@ -31,6 +31,7 @@
                                     <Grid>
                                         <StackPanel>
                                             <TextBlock Text="{Binding DeviceInfo.Icon, FallbackValue=&#xf2db;}"
+                                                       Margin="0 0 0 10"
                                                        FontFamily="{StaticResource FontAwesome-Regular}"
                                                        FontSize="80"
                                                        Foreground="White"
@@ -39,6 +40,7 @@
                                             <TextBlock Text="{Binding DeviceInfo.Type, FallbackValue=UnknownDevice}"
                                                        HorizontalAlignment="Center"
                                                        VerticalAlignment="Center"
+                                                       Margin="0 0 0 5"
                                                        Foreground="White"/>
                                             <TextBlock Text="{Binding DeviceInfo.Id, FallbackValue=UnknownId}"
                                                        HorizontalAlignment="Center"

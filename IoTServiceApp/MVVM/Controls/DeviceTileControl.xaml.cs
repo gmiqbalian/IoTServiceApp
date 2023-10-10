@@ -16,15 +16,11 @@ using System.Windows.Shapes;
 
 namespace IoTServiceApp.MVVM.Controls
 {
-    /// <summary>
-    /// Interaction logic for DeviceTileControl.xaml
-    /// </summary>
     public partial class DeviceTileControl : UserControl
     {
         public DeviceTileControl()
         {
             InitializeComponent();
-            this.DataContext = this;
         }
     }
 }
