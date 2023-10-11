@@ -1,4 +1,4 @@
-﻿namespace IoTServiceApp.MVVM.Models;
+﻿namespace IoTServiceAppLibrary.Models;
 
 public class DeviceInfo
 {

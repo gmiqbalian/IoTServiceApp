@@ -25,11 +25,12 @@
         
     </Style>
     
-    <Style x:Key="SettingsButton" TargetType="Button" BasedOn="{StaticResource BaseButton}">
+    <Style x:Key="SettingsPage" TargetType="Button" BasedOn="{StaticResource BaseButton}">
         <Setter Property="Content" Value="&#xf1de;"/>
         <Setter Property="HorizontalAlignment" Value="Right"/>
         <Setter Property="Margin" Value="0 30 60 0"/>
     </Style>
+    
 
     <Style x:Key="CloseButton" TargetType="Button" BasedOn="{StaticResource BaseButton}">
         <Setter Property="Content" Value="&#xf00d;"/>
@@ -37,6 +38,12 @@
     
     <Style x:Key="AddButton" TargetType="Button" BasedOn="{StaticResource BaseButton}">
         <Setter Property="Content" Value="&#x2b;"/>
+        <Setter Property="Margin" Value="0 10 0 10"/>
+    </Style>
+    
+    <Style x:Key="SettingsButton" TargetType="Button" BasedOn="{StaticResource BaseButton}">
+        <Setter Property="Content" Value="&#xf013;"/>
+        <Setter Property="HorizontalAlignment" Value="Right"/>
         <Setter Property="Margin" Value="0 10 0 10"/>
     </Style>
     
@@ -48,6 +55,32 @@
     <Style x:Key="PowerOffButton" TargetType="Button" BasedOn="{StaticResource BaseButton}">
         <Setter Property="Content" Value="&#xf011;"/>
         <Setter Property="Margin" Value="0 10 0 10"/>
+    </Style>
+    
+    <Style x:Key="AddDeviceButton" TargetType="Button">
+        <Setter Property="Background" Value="DarkBlue"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderBrush" Value="DarkBlue"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Content" Value="Add Device" />
+        <Setter Property="Padding" Value="15"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Height" Value="60"/>
+        <Setter Property="Width" Value="140"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="10">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
     
     

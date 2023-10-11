@@ -1,27 +1,20 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Timers;
+﻿using SystemTimer = System.Timers.Timer;
 
-namespace IoTServiceApp.Services
+namespace IoTServiceAppLibrary.Services
 {
     public class DateAndTimeService
     {
-        private readonly Timer _timer;
+        private readonly SystemTimer _timer;
         public event Action? TimeUpdated;
         public string? Date { get; private set; }
         public string? Time { get; private set; }
 
 
-        public DateAndTimeService() 
+        public DateAndTimeService()
         {
             GetDateAndTime();
 
-            _timer = new Timer(1000);
+            _timer = new System.Timers.Timer(1000);
             _timer.Elapsed += (s, e) => GetDateAndTime();
             _timer.Start();
         }

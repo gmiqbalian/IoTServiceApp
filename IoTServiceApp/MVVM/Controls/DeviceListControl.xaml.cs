@@ -1,6 +1,4 @@
-﻿using IoTServiceApp.MVVM.Controls;
-using IoTServiceApp.MVVM.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace IoTServiceApp.MVVM.Views
+namespace IoTServiceApp.MVVM.Controls
 {
-    public partial class SettingsView : UserControl
+    public partial class DeviceListControl : UserControl
     {
-        public SettingsView()
+        public DeviceListControl()
         {
             InitializeComponent();
-        }
 
+        }
     }
 }

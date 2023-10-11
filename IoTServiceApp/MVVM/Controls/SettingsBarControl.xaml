@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="IoTServiceApp.MVVM.Controls.SettingsBarControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:IoTServiceApp.MVVM.Controls"
+             xmlns:views="clr-namespace:IoTServiceApp.MVVM.Views"
+             xmlns:viewmodels="clr-namespace:IoTServiceApp.MVVM.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewmodels:SettingsViewModel}"
+             mc:Ignorable="d">
+    
+    
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Button Grid.Row="0" 
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            Style="{StaticResource CloseButton}"
+            Content="&#xf00d;" 
+            Command="{Binding NavigateToHomeCommand}"/>
+
+        <StackPanel VerticalAlignment="Bottom" Grid.Row="1">
+            <Button Style="{StaticResource AddButton}"/>
+            <Button Style="{StaticResource MenuButton}"/>
+            <Button Style="{StaticResource SettingsButton}"/>
+            <Button Style="{StaticResource PowerOffButton}" Command="{Binding ExitAppCommand}"/>
+        </StackPanel>
+    </Grid>
+    
+</UserControl>

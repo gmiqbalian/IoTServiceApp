@@ -1,13 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using IoTServiceApp.MVVM.Models;
-using IoTServiceApp.Services;
-using Microsoft.Azure.Devices;
+using IoTServiceAppLibrary.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace IoTServiceApp.MVVM.ViewModels;
 
@@ -43,9 +40,12 @@ public partial class HomeViewModel : ObservableObject
         _dateAndTimeService = dateAndTimeService;
         _weatherService = weatherService;
 
+        devices = new ObservableCollection<DeviceInfoViewModel>();
+
         GetAllDevices();
         GetDateAndTime();
         GetWeatherData();
+
         _iotManager.DeviceListUpdated += GetAllDevices;
     }
 
@@ -59,16 +59,6 @@ public partial class HomeViewModel : ObservableObject
     {
         Devices = new ObservableCollection<DeviceInfoViewModel>(_iotManager.DeviceList
             .Select(device => new DeviceInfoViewModel(device)).ToList());
-
-        //Devices = new ObservableCollection<DeviceInfo>(_iotManager.DeviceList
-        //    .Select(device => new DeviceInfo { Id = device.Id }).ToList());
-
-        //Devices = new ObservableCollection<DeviceInfo>()
-        //{
-        //    new DeviceInfo {Id="machine"},
-        //    new DeviceInfo {Id="tv"},
-        //    new DeviceInfo {Id="speakers"},
-        //};
     }
     private void GetDateAndTime()
     {

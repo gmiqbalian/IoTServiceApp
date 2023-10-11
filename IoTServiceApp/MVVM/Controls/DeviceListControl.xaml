@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="IoTServiceApp.MVVM.Controls.DeviceListControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:IoTServiceApp.MVVM.Controls"
+             xmlns:viewmodels="clr-namespace:IoTServiceApp.MVVM.ViewModels"
+             xmlns:controls="clr-namespace:IoTServiceApp.MVVM.Controls"
+             d:DataContext="{d:DesignInstance Type=viewmodels:HomeViewModel}"
+             mc:Ignorable="d">
+
+    <ItemsControl ItemsSource="{Binding Devices}">
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                <StackPanel>
+                    <TextBlock Text="{Binding Devices.DeviceInfo.Id}"/>
+                    <TextBlock Text="{Binding Devices.DeviceInfo.Type}"/>
+                </StackPanel>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+        
+    </ItemsControl>
+
+</UserControl>

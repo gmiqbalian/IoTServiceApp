@@ -1,10 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using IoTServiceApp.MVVM.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using IoTServiceAppLibrary.Models;
 
 namespace IoTServiceApp.MVVM.ViewModels;
 

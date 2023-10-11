@@ -4,8 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:IoTServiceApp.MVVM.Views"
-             xmlns:viewmodel="clr-namespace:IoTServiceApp.MVVM.ViewModels"
-             d:DataContext="{d:DesignInstance Type=viewmodel:SettingsViewModel}"
+             xmlns:viewmodels="clr-namespace:IoTServiceApp.MVVM.ViewModels"
+             xmlns:views="clr-namespace:IoTServiceApp.MVVM.Views"
+             xmlns:controls="clr-namespace:IoTServiceApp.MVVM.Controls"
+             d:DataContext="{d:DesignInstance Type=viewmodels:SettingsViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1280">
     <Grid>
@@ -26,19 +28,24 @@
 
                     <!-- title -->
                     <Grid Grid.Row="0">
-                        <TextBlock Text="Settings"
-                        Margin="30 20 0 0"
-                        FontSize="30"/>
+                        <TextBlock Text="{Binding Title}"
+                            Margin="30 20 0 0"
+                            Foreground="White"
+                            FontSize="30"/>
                     </Grid>
 
                     <!-- devices list etc. -->
                     <Grid Grid.Row="1">
-                        <StackPanel Margin="30 40 0 0">
-                            <TextBlock Text="hello test" FontSize="20"></TextBlock>
-                            <TextBlock Text="hello test" FontSize="20"></TextBlock>
-                            <TextBlock Text="hello test" FontSize="20"></TextBlock>
-                            <TextBlock Text="hello test" FontSize="20"></TextBlock>
-                        </StackPanel>
+                        <ContentControl x:Name="SettingsContent" Content="{Binding CurrentSection}">
+                            <ContentControl.Resources>
+                                <DataTemplate DataType="{x:Type controls:AddDeviceControl}">
+                                    <views:SettingsView/>
+                                </DataTemplate>
+                                <DataTemplate DataType="{x:Type controls:DeviceListControl}">
+                                    <views:SettingsView/>
+                                </DataTemplate>
+                            </ContentControl.Resources>
+                        </ContentControl>
                     </Grid>
                 </Grid>
 
@@ -51,15 +58,16 @@
                         </Grid.RowDefinitions>
 
                         <Button Grid.Row="0" 
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Center"
-                                Style="{StaticResource CloseButton}"
-                                Content="&#xf00d;" 
-                                Command="{Binding NavigateToHomeCommand}"/>
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Style="{StaticResource CloseButton}"
+                            Content="&#xf00d;" 
+                            Command="{Binding NavigateToHomeCommand}"/>
 
                         <StackPanel VerticalAlignment="Bottom" Grid.Row="1">
-                            <Button Style="{StaticResource AddButton}"/>
+                            <Button Style="{StaticResource AddButton}" Command="{Binding NavigateToAddDeviceSectionCommand}"/>
                             <Button Style="{StaticResource MenuButton}"/>
+                            <Button Style="{StaticResource SettingsButton}"/>
                             <Button Style="{StaticResource PowerOffButton}" Command="{Binding ExitAppCommand}"/>
                         </StackPanel>
                     </Grid>

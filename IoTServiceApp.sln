@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoTServiceApp", "IoTServiceApp\IoTServiceApp.csproj", "{44F29A24-5082-4E34-B877-0FF1BE8A6980}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IoTServiceApp", "IoTServiceApp\IoTServiceApp.csproj", "{44F29A24-5082-4E34-B877-0FF1BE8A6980}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoTServiceAppLibrary", "IoTServiceAppLibrary\IoTServiceAppLibrary.csproj", "{1583AB53-39FF-40B9-9AD6-88A25CC46831}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceAppAzureFunctions", "ServiceAppAzureFunctions\ServiceAppAzureFunctions.csproj", "{D2AF33EB-1F34-46B2-9FC2-C8413A9B74C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{44F29A24-5082-4E34-B877-0FF1BE8A6980}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44F29A24-5082-4E34-B877-0FF1BE8A6980}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44F29A24-5082-4E34-B877-0FF1BE8A6980}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1583AB53-39FF-40B9-9AD6-88A25CC46831}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1583AB53-39FF-40B9-9AD6-88A25CC46831}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1583AB53-39FF-40B9-9AD6-88A25CC46831}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1583AB53-39FF-40B9-9AD6-88A25CC46831}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2AF33EB-1F34-46B2-9FC2-C8413A9B74C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2AF33EB-1F34-46B2-9FC2-C8413A9B74C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2AF33EB-1F34-46B2-9FC2-C8413A9B74C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2AF33EB-1F34-46B2-9FC2-C8413A9B74C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

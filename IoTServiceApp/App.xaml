@@ -8,6 +8,7 @@
                 <ResourceDictionary Source="./Resources/FontsDictionary.xaml"/>
                 <ResourceDictionary Source="./Resources/DeviceTileDictionary.xaml"/>
                 <ResourceDictionary Source="./Resources/ButtonsDictionary.xaml"/>
+                <ResourceDictionary Source="./Resources/TextBoxDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -32,8 +32,8 @@
                    Margin="80 10 0 0"
                    Foreground="White"/>
 
-                <!-- close button -->
-                <Button Grid.Column="1" Style="{StaticResource SettingsButton}" 
+                <!-- go to settings button -->
+                <Button Grid.Column="1" Style="{StaticResource SettingsPage}" 
                         Command="{Binding NavigateToSettingsCommand}"/>
             </Grid>
 
