@@ -1,8 +1,4 @@
-﻿using IoTServiceApp.MVVM.ViewModels;
-using IoTServiceAppLibrary.Models;
-using IoTServiceAppLibrary.Services;
-using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,19 +15,14 @@ using System.Windows.Shapes;
 
 namespace IoTServiceApp.MVVM.Controls
 {
-    public partial class DeviceTileControl : UserControl
+    /// <summary>
+    /// Interaction logic for ToggleButton.xaml
+    /// </summary>
+    public partial class ToggleButton : UserControl
     {
-
-        public DeviceTileControl()
+        public ToggleButton()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var button = (Button)sender;
-            var viewmodel = DataContext as DeviceInfoViewModel;
-
         }
     }
 }

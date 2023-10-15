@@ -1,6 +1,7 @@
 ﻿using IoTServiceAppLibrary.Models;
 using Microsoft.Azure.Devices;
 using Microsoft.Azure.Devices.Shared;
+using Newtonsoft.Json;
 using System.Diagnostics;
 using SystemTimer = System.Timers.Timer;
 
@@ -20,8 +21,6 @@ public class IoTHubManager
     {
         _registryManager = RegistryManager.CreateFromConnectionString("HostName=kyh-iothub-gm.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=29hqWHz6b0gRxP/Oyo5q7rTahDG6r6sssAIoTDmJCmg=");
 
-        //DeviceList = new List<DeviceInfo>();
-
         Task.Run(GetAllDevicesFromCloudAsync);
 
         _timer = new System.Timers.Timer(1000);
@@ -36,13 +35,21 @@ public class IoTHubManager
             var twinList = new List<Twin>();
             var query = _registryManager.CreateQuery("SELECT * FROM devices");
 
-            foreach (var twin in await query.GetNextAsTwinAsync())
-                twinList.Add(twin);
+            if(query.HasMoreResults)
+                foreach (var twin in await query.GetNextAsTwinAsync())
+                    twinList.Add(twin);
 
             foreach (var device in twinList)
             {
                 if (!DeviceList.Any(x => x.Id == device.DeviceId))
-                    DeviceList.Add(new DeviceInfo { Id = device.DeviceId });
+                    DeviceList.Add(new DeviceInfo
+                    {
+                        Id = device.DeviceId,
+                        Name = device.Properties.Reported["deviceName"].ToString(),
+                        Location = device.Properties.Reported["location"].ToString().ToUpper(),
+                        Type = device.Properties.Reported["deviceType"].ToString(),
+                        ConnectionState = device.ConnectionState.ToString()!
+                    });
             }
 
             for (int i = DeviceList.Count - 1; i >= 0; i--)

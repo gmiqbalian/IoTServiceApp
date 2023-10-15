@@ -5,13 +5,14 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows.Documents;
 
 namespace IoTServiceApp.MVVM.ViewModels;
 
 public partial class HomeViewModel : ObservableObject
 {
     private readonly IServiceProvider _serviceProvider;
-    private readonly IoTHubManager _iotManager;
+    private readonly IoTHubManager _iotHubManager;
     private readonly DateAndTimeService _dateAndTimeService;
     private readonly WeatherService _weatherService;
     
@@ -28,7 +29,12 @@ public partial class HomeViewModel : ObservableObject
     private string? _weatherIcon;
 
     [ObservableProperty]
+    private string? _deviceState;
+
+    [ObservableProperty]
     ObservableCollection<DeviceInfoViewModel> devices;
+
+    ObservableCollection<string> test = new ObservableCollection<string>();
 
     public HomeViewModel(IServiceProvider serviceProvider, 
         IoTHubManager iotHubManager, 
@@ -36,17 +42,21 @@ public partial class HomeViewModel : ObservableObject
         WeatherService weatherService)
     {
         _serviceProvider = serviceProvider;
-        _iotManager = iotHubManager;
+        _iotHubManager = iotHubManager;
         _dateAndTimeService = dateAndTimeService;
         _weatherService = weatherService;
 
         devices = new ObservableCollection<DeviceInfoViewModel>();
+        test.Add("hello");
+        test.Add("hello1");
+        test.Add("hello2");
+
 
         GetAllDevices();
         GetDateAndTime();
         GetWeatherData();
 
-        _iotManager.DeviceListUpdated += GetAllDevices;
+        _iotHubManager.DeviceListUpdated += GetAllDevices;
     }
 
     [RelayCommand]
@@ -57,7 +67,7 @@ public partial class HomeViewModel : ObservableObject
     }
     private void GetAllDevices()
     {
-        Devices = new ObservableCollection<DeviceInfoViewModel>(_iotManager.DeviceList
+        Devices = new ObservableCollection<DeviceInfoViewModel>(_iotHubManager.DeviceList
             .Select(device => new DeviceInfoViewModel(device)).ToList());
     }
     private void GetDateAndTime()
@@ -75,5 +85,11 @@ public partial class HomeViewModel : ObservableObject
             OutsideTemp = _weatherService.OutsideTemp;
             WeatherIcon = _weatherService.WeatherIcon;
         };
+    }
+
+    [RelayCommand]
+    private void SwitchDeviceOnOff()
+    {
+        DeviceState = "i am triggered";
     }
 }

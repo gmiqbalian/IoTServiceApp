@@ -3,23 +3,32 @@
 public class DeviceInfo
 {
     public string Id { get; set; } = null!;
-    public string Name { get; set; } = null!;
-    public string Type { get; set; } = "speaker";
-    public string Location { get; set; } = null!;
-    public string Icon { get; set; } = null!;
+    public string? Name { get; set; } = "washingmachine";
+    public string? Type { get; set; }
+    public string? Location { get; set; }
+    public string? Icon => SetIcon();
+    public bool State => SetState();
+    public string ConnectionState { get; set; }
 
     public DeviceInfo()
     {
-        Icon = SetIcon();
     }
     private string SetIcon()
     {
-        return (Type.ToLower()) switch
+        return (Name!.ToLower()) switch
         {
             "washingmachine" => "\uf898",
-            "speaker" => "\uf8df",
-            "tv" => "\uf26c",
+            "speakers" => "\uf8df",
+            "television" => "\uf26c",
             _ => ""
         };
+      
+    }
+    private bool SetState()
+    {
+        if (ConnectionState.ToLower() == "connected")
+            return true;
+        return false;
+
     }
 }

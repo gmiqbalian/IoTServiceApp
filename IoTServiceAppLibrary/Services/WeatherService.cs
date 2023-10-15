@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,14 +13,17 @@ namespace IoTServiceAppLibrary.Services
     public class WeatherService
     {
         private readonly HttpClient _httpClient;
-        private readonly string _outsideTempUrl = "https://api.openweathermap.org/data/2.5/weather?lat=59.334591&lon=18.063240&appid=078db5ab801b77dd0a2fdfba926a61c7&units=metric";
+        private readonly string _outsideTempUrl;
         private readonly SystemTimer _timer;
+        private readonly IConfiguration _configuration;
         public string? OutsideTemp { get; set; }
         public string? WeatherIcon { get; set; }
         public event Action? WeatheUpdated;
-        public WeatherService(HttpClient httpClient)
+        public WeatherService(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
+            _configuration = configuration;
+            _outsideTempUrl = _configuration.GetConnectionString("weatherUrl")!;
 
             Task.Run(GetWeatherDataAsync);
 

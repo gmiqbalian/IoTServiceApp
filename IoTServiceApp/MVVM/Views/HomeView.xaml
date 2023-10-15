@@ -60,7 +60,7 @@
 
                 <!--home icon-->
                 <controls:HomeIconControl Grid.Column="1" />
-                
+
             </Grid>
 
             <!-- devices list -->
@@ -77,8 +77,8 @@
                     </ItemsControl.ItemsPanel>
                     
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <controls:DeviceTileControl/>
+                        <DataTemplate DataType="viewmodels:HomeViewModel">
+                            <controls:DeviceTileControl />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

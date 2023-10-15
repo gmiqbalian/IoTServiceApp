@@ -64,6 +64,11 @@ public partial class SettingsViewModel : ObservableObject
         CurrentSection = _serviceProvider.GetRequiredService<AddDeviceControl>();
     }
     [RelayCommand]
+    private void NavigateToDeviceListSection()
+    {
+        CurrentSection = _serviceProvider.GetRequiredService<DeviceListControl>();
+    }
+    [RelayCommand]
     private async Task AddDevice()
     {        
         var deviceId = InputText;
@@ -79,7 +84,7 @@ public partial class SettingsViewModel : ObservableObject
 
             try
             {
-                await _httpClient.PostAsync($"http://localhost:7134/api/DeviceRegistration?deviceId={deviceId}", null);
+                await _httpClient.PostAsync($"https://iotdevicesfunctionapp.azurewebsites.net/api/AddDevice?code=lUQxcD1irPCLJnLXDnlx0pD2i7VVR9AD-kRZbjAQWOUOAzFu2qDu4Q==", null);
                 InputText = null;
                 ShowMessage(MessageStatus.Success);
             }
@@ -122,4 +127,6 @@ public partial class SettingsViewModel : ObservableObject
         AddDeviceStatusMessage = string.Empty;
         _timer.Stop();
     }
+    
+    
 }

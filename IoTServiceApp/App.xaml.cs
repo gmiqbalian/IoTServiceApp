@@ -1,8 +1,10 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Windows;
 using IoTServiceApp.MVVM.Controls;
 using IoTServiceApp.MVVM.ViewModels;
 using IoTServiceAppLibrary.Services;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -14,7 +16,8 @@ namespace IoTServiceApp
         public App()
         {
             _appHost = Host.CreateDefaultBuilder()
-                .ConfigureServices(services =>
+                .ConfigureAppConfiguration(config => config.AddJsonFile("appsettings.json", optional: true, reloadOnChange:true))
+                .ConfigureServices((config, services) =>
                 {
                     services.AddSingleton<DateAndTimeService>();
                     services.AddSingleton<WeatherService>();
@@ -29,6 +32,7 @@ namespace IoTServiceApp
 
                     services.AddSingleton<AddDeviceControl>();
                     services.AddSingleton<DeviceListControl>();
+                    services.AddSingleton<DeviceTileControl>();
 
                 })
                 .Build();

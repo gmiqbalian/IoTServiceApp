@@ -5,20 +5,39 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:IoTServiceApp.MVVM.Controls"
              xmlns:viewmodels="clr-namespace:IoTServiceApp.MVVM.ViewModels"
+             xmlns:models="clr-namespace:IoTServiceAppLibrary.Models;assembly=IoTServiceAppLibrary"
              xmlns:controls="clr-namespace:IoTServiceApp.MVVM.Controls"
              d:DataContext="{d:DesignInstance Type=viewmodels:HomeViewModel}"
              mc:Ignorable="d">
 
-    <ItemsControl ItemsSource="{Binding Devices}">
+
+    <!--<ListView ItemsSource="{Binding Devices}">
+        <DataTemplate>
+            <StackPanel>
+                <TextBlock Text="{Binding DeviceInfo.Name}" FontSize="10" Foreground="Black"/>
+                <TextBlock Text="{Binding DeviceInfo.Name}" FontSize="10" Foreground="Black"/>
+            </StackPanel>
+        </DataTemplate>
+    </ListView>-->
+
+    <!--<ListView ItemsSource="{Binding Test}"
+              
+              Background="Yellow"
+              Foreground="Black">
+    </ListView>-->
+    
+    <ItemsControl ItemsSource="{Binding Test}">
         <ItemsControl.ItemTemplate>
             <DataTemplate>
                 <StackPanel>
-                    <TextBlock Text="{Binding Devices.DeviceInfo.Id}"/>
-                    <TextBlock Text="{Binding Devices.DeviceInfo.Type}"/>
+                    <TextBlock 
+                               FontSize="40"
+                               Foreground="White"/>
+                    
                 </StackPanel>
             </DataTemplate>
         </ItemsControl.ItemTemplate>
-        
     </ItemsControl>
-
+    
+    
 </UserControl>
