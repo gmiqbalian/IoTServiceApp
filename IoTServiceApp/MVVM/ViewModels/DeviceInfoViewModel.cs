@@ -8,8 +8,12 @@ public partial class DeviceInfoViewModel : ObservableObject
     [ObservableProperty]
     private DeviceInfo _deviceInfo;
 
+    [ObservableProperty]
+    string state;
+
     public DeviceInfoViewModel(DeviceInfo deviceInfo)
     {
         _deviceInfo = deviceInfo;
+        State = deviceInfo.State;
     }
 }

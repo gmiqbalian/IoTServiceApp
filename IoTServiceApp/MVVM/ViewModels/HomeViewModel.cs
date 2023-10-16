@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Documents;
 
 namespace IoTServiceApp.MVVM.ViewModels;
@@ -15,16 +17,16 @@ public partial class HomeViewModel : ObservableObject
     private readonly IoTHubManager _iotHubManager;
     private readonly DateAndTimeService _dateAndTimeService;
     private readonly WeatherService _weatherService;
-    
+
     [ObservableProperty]
     private string? _time;
-    
+
     [ObservableProperty]
     private string? _date;
-    
+
     [ObservableProperty]
     private string? _outsideTemp;
-    
+
     [ObservableProperty]
     private string? _weatherIcon;
 
@@ -32,25 +34,17 @@ public partial class HomeViewModel : ObservableObject
     private string? _deviceState;
 
     [ObservableProperty]
-    ObservableCollection<DeviceInfoViewModel> devices;
+    ObservableCollection<DeviceInfoViewModel>? devices = new ObservableCollection<DeviceInfoViewModel>();
 
-    ObservableCollection<string> test = new ObservableCollection<string>();
-
-    public HomeViewModel(IServiceProvider serviceProvider, 
-        IoTHubManager iotHubManager, 
-        DateAndTimeService dateAndTimeService, 
+    public HomeViewModel(IServiceProvider serviceProvider,
+        IoTHubManager iotHubManager,
+        DateAndTimeService dateAndTimeService,
         WeatherService weatherService)
     {
         _serviceProvider = serviceProvider;
         _iotHubManager = iotHubManager;
         _dateAndTimeService = dateAndTimeService;
         _weatherService = weatherService;
-
-        devices = new ObservableCollection<DeviceInfoViewModel>();
-        test.Add("hello");
-        test.Add("hello1");
-        test.Add("hello2");
-
 
         GetAllDevices();
         GetDateAndTime();
@@ -70,6 +64,23 @@ public partial class HomeViewModel : ObservableObject
         Devices = new ObservableCollection<DeviceInfoViewModel>(_iotHubManager.DeviceList
             .Select(device => new DeviceInfoViewModel(device)).ToList());
     }
+    [RelayCommand]
+    private async Task SwitchDeviceOnOff(Button button)
+    {
+        var btn = (DeviceInfoViewModel)button.DataContext;
+
+        if(!string.IsNullOrEmpty(btn.DeviceInfo.State))
+            if (btn.DeviceInfo.State.ToLower() == "off")
+            {
+                await _iotHubManager.InvokeDirectMethodOnCloudAsync(btn.DeviceInfo.Id, "start");
+                DeviceState = "ON";
+            }
+            else if (btn.DeviceInfo.State.ToLower() == "on")
+            {
+                await _iotHubManager.InvokeDirectMethodOnCloudAsync(btn.DeviceInfo.Id, "stop");
+                DeviceState = "OFF";
+            }
+    }
     private void GetDateAndTime()
     {
         _dateAndTimeService.TimeUpdated += () =>
@@ -87,9 +98,4 @@ public partial class HomeViewModel : ObservableObject
         };
     }
 
-    [RelayCommand]
-    private void SwitchDeviceOnOff()
-    {
-        DeviceState = "i am triggered";
-    }
 }

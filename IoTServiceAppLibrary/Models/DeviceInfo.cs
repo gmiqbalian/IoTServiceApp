@@ -1,34 +1,27 @@
-﻿namespace IoTServiceAppLibrary.Models;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-public class DeviceInfo
+namespace IoTServiceAppLibrary.Models;
+
+public partial class DeviceInfo
 {
     public string Id { get; set; } = null!;
-    public string? Name { get; set; } = "washingmachine";
-    public string? Type { get; set; }
-    public string? Location { get; set; }
+    public string? Name { get; set; } = string.Empty;
+    public string? Type { get; set; } = string.Empty;
+    public string? Location { get; set; } = string.Empty;
     public string? Icon => SetIcon();
-    public bool State => SetState();
-    public string ConnectionState { get; set; }
+    public string State { get; set; } = string.Empty;
+    public string ConnectionState { get; set; } = string.Empty;
 
-    public DeviceInfo()
-    {
-    }
     private string SetIcon()
     {
-        return (Name!.ToLower()) switch
+        return (Id!.ToLower()) switch
         {
             "washingmachine" => "\uf898",
             "speakers" => "\uf8df",
             "television" => "\uf26c",
-            _ => ""
+            "tv" => "\uf26c",
+            _ => "\uf2db"
         };
       
-    }
-    private bool SetState()
-    {
-        if (ConnectionState.ToLower() == "connected")
-            return true;
-        return false;
-
     }
 }

@@ -60,12 +60,11 @@
 
                 <!--home icon-->
                 <controls:HomeIconControl Grid.Column="1" />
-
             </Grid>
 
             <!-- devices list -->
             <Grid Grid.Row="2" Margin="0 40 0 40">
-
+                
                 <ItemsControl x:Name="DeviceList" 
                         ItemsSource="{Binding Devices}" 
                         Foreground="White">
@@ -77,8 +76,11 @@
                     </ItemsControl.ItemsPanel>
                     
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate DataType="viewmodels:HomeViewModel">
-                            <controls:DeviceTileControl />
+                        <DataTemplate>
+                            <StackPanel>
+                                <Button Style="{StaticResource DeviceTile}" Click="Device_Tile_Clicked"/>
+                            </StackPanel>
+                            <!--<controls:DeviceTileControl />-->
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

@@ -15,7 +15,8 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Button Grid.Row="0" Style="{StaticResource DeviceTile}" Command="{Binding SwitchDeviceOnOffCommand}" Click="Button_Click"></Button>
+        <Button Grid.Row="0" Style="{StaticResource DeviceTile}"
+                DataContext="{Binding}"></Button>
     </Grid>
 
 </UserControl>

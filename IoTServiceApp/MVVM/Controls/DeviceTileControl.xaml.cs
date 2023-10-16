@@ -21,16 +21,9 @@ namespace IoTServiceApp.MVVM.Controls
 {
     public partial class DeviceTileControl : UserControl
     {
-
         public DeviceTileControl()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var button = (Button)sender;
-            var viewmodel = DataContext as DeviceInfoViewModel;
 
         }
     }
