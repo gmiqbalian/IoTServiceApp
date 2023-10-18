@@ -4,9 +4,12 @@ using IoTServiceApp.Enums;
 using IoTServiceApp.MVVM.Controls;
 using IoTServiceApp.MVVM.Views;
 using IoTServiceAppLibrary.Services;
+using Microsoft.Azure.Devices;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows;
@@ -25,6 +28,9 @@ public partial class SettingsViewModel : ObservableObject
     public readonly string Title = "Settings";
 
     [ObservableProperty]
+    private ObservableCollection<DeviceInfoViewModel> _devices;
+
+    [ObservableProperty]
     private Control _currentSection;
 
     [ObservableProperty]
@@ -38,8 +44,9 @@ public partial class SettingsViewModel : ObservableObject
         _serviceProvider = serviceProvider;
         _iotHubManager = iotHubManager;
         _httpClient = httpClient;
+        _devices = new ObservableCollection<DeviceInfoViewModel>();
 
-        CurrentSection = new DeviceListControl();
+        CurrentSection = new DeviceListControl(_serviceProvider.GetRequiredService<HomeViewModel>());
 
         _timer = new DispatcherTimer();
         _timer.Interval = TimeSpan.FromSeconds(3);
@@ -127,5 +134,11 @@ public partial class SettingsViewModel : ObservableObject
         AddDeviceStatusMessage = string.Empty;
         _timer.Stop();
     }
-    
+
+    [RelayCommand]
+    private async Task DeleteDeviceFromCloud(string deviceId)
+    {
+        if (!string.IsNullOrEmpty(deviceId))
+            await _iotHubManager.DeleteDeviceFromCloudAsync(deviceId);
+    }
 }

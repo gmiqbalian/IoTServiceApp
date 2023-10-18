@@ -115,6 +115,14 @@ public class IoTHubManager
 
         return null!;
     }
+    public async Task DeleteDeviceFromCloudAsync(string deviceId)
+    {
+        try
+        {
+            await _registryManager.RemoveDeviceAsync(deviceId);
+        } 
+        catch (Exception ex) { Debug.WriteLine(ex.Message); }
+    }
     public async Task InvokeDirectMethodOnCloudAsync(string deviceId, string methodName)
     {
         try

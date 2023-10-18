@@ -7,26 +7,47 @@
              xmlns:viewmodels="clr-namespace:IoTServiceApp.MVVM.ViewModels"
              xmlns:models="clr-namespace:IoTServiceAppLibrary.Models;assembly=IoTServiceAppLibrary"
              xmlns:controls="clr-namespace:IoTServiceApp.MVVM.Controls"
-             d:DataContext="{d:DesignInstance Type=viewmodels:HomeViewModel}"
+             d:DataContext="{d:DesignInstance Type=viewmodels:SettingsViewModel}"
              mc:Ignorable="d">
 
-
-    <!--<ItemsControl ItemsSource="{Binding Devices}">
+    <ItemsControl ItemsSource="{Binding Devices}">
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <WrapPanel Orientation="Vertical"/>
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
         <ItemsControl.ItemTemplate>
             <DataTemplate>
-                <StackPanel>
-                    <TextBlock Text="hello"
-                               FontSize="40"
-                               Foreground="Black"/>
-                </StackPanel>
+                <Grid>
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource TextDetail}">
+                            <Run Text="Device Id: "/>
+                            <Run Text="{Binding DeviceInfo.Id}"/>
+                        </TextBlock>
+                        <TextBlock Style="{StaticResource TextDetail}">
+                            <Run Text="Device Name: "/>
+                            <Run Text="{Binding DeviceInfo.Name}"/>
+                        </TextBlock>
+                        <TextBlock Style="{StaticResource TextDetail}">
+                            <Run Text="Device Type: "/>
+                            <Run Text="{Binding DeviceInfo.Type}"/>
+                        </TextBlock>
+                        <TextBlock Style="{StaticResource TextDetail}">
+                            <Run Text="Device Location: "/>
+                            <Run Text="{Binding DeviceInfo.Location}"/>
+                        </TextBlock>
+                        <Button Content="Delete"
+                                Click="Button_Click"
+                                HorizontalAlignment="Left"
+                                Width="80"
+                                Height="40"
+                                Margin="30 20 0 20"
+                                Style="{StaticResource AddDeviceButton}"
+                                CommandParameter="{Binding DeviceInfo.Id}"/>
+                    </StackPanel>
+                </Grid>
             </DataTemplate>
         </ItemsControl.ItemTemplate>
-    </ItemsControl>-->
-    <StackPanel>
-        <TextBlock Text="{Binding test}"></TextBlock>
-        <TextBlock Text="hello"></TextBlock>
-        <TextBlock Text="hello"></TextBlock>
-    </StackPanel>
-    
-    
+    </ItemsControl>
+
 </UserControl>

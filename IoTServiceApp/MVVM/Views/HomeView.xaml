@@ -80,7 +80,6 @@
                             <StackPanel>
                                 <Button Style="{StaticResource DeviceTile}" Click="Device_Tile_Clicked"/>
                             </StackPanel>
-                            <!--<controls:DeviceTileControl />-->
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

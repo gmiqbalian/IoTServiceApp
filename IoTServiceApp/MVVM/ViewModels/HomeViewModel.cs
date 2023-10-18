@@ -101,5 +101,11 @@ public partial class HomeViewModel : ObservableObject
             WeatherIcon = _weatherService.WeatherIcon;
         };
     }
+    [RelayCommand]
+    private async Task DeleteDeviceFromCloudHome(string deviceId)
+    {
+        if (!string.IsNullOrEmpty(deviceId))
+            await _iotHubManager.DeleteDeviceFromCloudAsync(deviceId);
+    }
 
 }

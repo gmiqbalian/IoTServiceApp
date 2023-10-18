@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IoTServiceApp.MVVM.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,10 +18,25 @@ namespace IoTServiceApp.MVVM.Controls
 {
     public partial class DeviceListControl : UserControl
     {
-        public DeviceListControl()
+        public DeviceListControl(HomeViewModel homeViewModel)
         {
             InitializeComponent();
+            DataContext = homeViewModel;
 
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var button = (Button)sender;
+            var device = (DeviceInfoViewModel)button.DataContext;
+            
+            var viewModel = DataContext as HomeViewModel;
+            var confirmation = MessageBox.Show("Are you sure?", "Confirmation", MessageBoxButton.YesNo);
+            
+            if(confirmation == MessageBoxResult.Yes)
+                viewModel!.DeleteDeviceFromCloudHomeCommand.Execute(device.DeviceInfo.Id);
+
+        }
+
     }
 }
