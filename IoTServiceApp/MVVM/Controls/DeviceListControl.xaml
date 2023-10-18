@@ -11,33 +11,22 @@
              mc:Ignorable="d">
 
 
-    <!--<ListView ItemsSource="{Binding Devices}">
-        <DataTemplate>
-            <StackPanel>
-                <TextBlock Text="{Binding DeviceInfo.Name}" FontSize="10" Foreground="Black"/>
-                <TextBlock Text="{Binding DeviceInfo.Name}" FontSize="10" Foreground="Black"/>
-            </StackPanel>
-        </DataTemplate>
-    </ListView>-->
-
-    <!--<ListView ItemsSource="{Binding Test}"
-              
-              Background="Yellow"
-              Foreground="Black">
-    </ListView>-->
-    
-    <ItemsControl ItemsSource="{Binding Test}">
+    <!--<ItemsControl ItemsSource="{Binding Devices}">
         <ItemsControl.ItemTemplate>
             <DataTemplate>
                 <StackPanel>
-                    <TextBlock 
+                    <TextBlock Text="hello"
                                FontSize="40"
-                               Foreground="White"/>
-                    
+                               Foreground="Black"/>
                 </StackPanel>
             </DataTemplate>
         </ItemsControl.ItemTemplate>
-    </ItemsControl>
+    </ItemsControl>-->
+    <StackPanel>
+        <TextBlock Text="{Binding test}"></TextBlock>
+        <TextBlock Text="hello"></TextBlock>
+        <TextBlock Text="hello"></TextBlock>
+    </StackPanel>
     
     
 </UserControl>

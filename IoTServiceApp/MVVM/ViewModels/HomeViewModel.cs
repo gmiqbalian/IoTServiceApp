@@ -33,6 +33,8 @@ public partial class HomeViewModel : ObservableObject
     [ObservableProperty]
     private string? _deviceState;
 
+    public string test = "hello this is from home view model";
+
     [ObservableProperty]
     ObservableCollection<DeviceInfoViewModel>? devices = new ObservableCollection<DeviceInfoViewModel>();
 
@@ -70,16 +72,18 @@ public partial class HomeViewModel : ObservableObject
         var btn = (DeviceInfoViewModel)button.DataContext;
 
         if(!string.IsNullOrEmpty(btn.DeviceInfo.State))
-            if (btn.DeviceInfo.State.ToLower() == "off")
-            {
-                await _iotHubManager.InvokeDirectMethodOnCloudAsync(btn.DeviceInfo.Id, "start");
-                DeviceState = "ON";
-            }
-            else if (btn.DeviceInfo.State.ToLower() == "on")
-            {
-                await _iotHubManager.InvokeDirectMethodOnCloudAsync(btn.DeviceInfo.Id, "stop");
-                DeviceState = "OFF";
-            }
+            if(btn.DeviceInfo.ConnectionState.ToLower() == "connected")
+                if (btn.DeviceInfo.State.ToLower() == "off")
+                {
+                    await _iotHubManager.InvokeDirectMethodOnCloudAsync(btn.DeviceInfo.Id, "start");
+                    DeviceState = "ON";
+                    var b = button.Template.FindName("showstate", button);
+                }
+                else if (btn.DeviceInfo.State.ToLower() == "on")
+                {
+                    await _iotHubManager.InvokeDirectMethodOnCloudAsync(btn.DeviceInfo.Id, "stop");
+                    DeviceState = "OFF";
+                }
     }
     private void GetDateAndTime()
     {

@@ -40,22 +40,26 @@ public class IoTHubManager
                 foreach (var twin in await query.GetNextAsTwinAsync())
                     twinList.Add(twin);
 
-            foreach (var device in twinList)
+            foreach (var twin in twinList)
             {
-                var deviceToAdd = new DeviceInfo();
-
-                if (!DeviceList.Any(x => x.Id == device.DeviceId))
-                    deviceToAdd.Id = device.DeviceId;
-
-                if (device.Properties.Reported.Count > 0)
+                if (!DeviceList.Any(x => x.Id == twin.DeviceId))
                 {
-                    deviceToAdd.Name = device.Properties.Reported["deviceName"].ToString();
-                    deviceToAdd.Location = device.Properties.Reported["location"].ToString();
-                    deviceToAdd.Type = device.Properties.Reported["deviceType"].ToString();
-                    deviceToAdd.State = device.Properties.Reported["state"].ToString();
-                    deviceToAdd.ConnectionState = device.ConnectionState.ToString()!;
+                    var deviceToAdd = new DeviceInfo();
+                    deviceToAdd.Id = twin.DeviceId;
+
+                    DeviceList.Add(deviceToAdd);
                 }
-                DeviceList.Add(deviceToAdd);
+
+                var device = DeviceList.FirstOrDefault(x => x.Id == twin.DeviceId);
+
+                if (twin.Properties.Reported.Count > 0)
+                {
+                    device!.Name = twin.Properties.Reported["deviceName"].ToString();
+                    device.Location = twin.Properties.Reported["location"].ToString();
+                    device.Type = twin.Properties.Reported["deviceType"].ToString();
+                    device.State = twin.Properties.Reported["state"].ToString();
+                    device.ConnectionState = twin.ConnectionState.ToString()!;
+                }
             }
 
             for (int i = DeviceList.Count - 1; i >= 0; i--)
@@ -65,9 +69,26 @@ public class IoTHubManager
             }
 
             DeviceListUpdated?.Invoke();
-
         }
         catch (Exception ex) { Debug.WriteLine(ex.Message); }
+    }
+
+    private void UpdateTwinAsync(List<Twin> twinList)
+    {
+        foreach (var device in DeviceList)
+        {
+            foreach (Twin twin in twinList)
+            {
+                if (device.Id == twin.DeviceId)
+                {
+                    device.Name = twin.Properties.Reported["deviceName"].ToString();
+                    device.Location = twin.Properties.Reported["location"].ToString();
+                    device.Type = twin.Properties.Reported["deviceType"].ToString();
+                    device.State = twin.Properties.Reported["state"].ToString();
+                    device.ConnectionState = twin.ConnectionState.ToString()!;
+                }
+            }
+        }
     }
     public async Task<Device> GetDeviceFromCloudAsync(string deviceId)
     {

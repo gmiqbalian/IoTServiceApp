@@ -39,7 +39,7 @@ public partial class SettingsViewModel : ObservableObject
         _iotHubManager = iotHubManager;
         _httpClient = httpClient;
 
-        CurrentSection = _serviceProvider.GetRequiredService<DeviceListControl>();
+        CurrentSection = new DeviceListControl();
 
         _timer = new DispatcherTimer();
         _timer.Interval = TimeSpan.FromSeconds(3);
@@ -84,7 +84,7 @@ public partial class SettingsViewModel : ObservableObject
 
             try
             {
-                await _httpClient.PostAsync($"https://iotdevicesfunctionapp.azurewebsites.net/api/AddDevice?code=lUQxcD1irPCLJnLXDnlx0pD2i7VVR9AD-kRZbjAQWOUOAzFu2qDu4Q==", null);
+                await _iotHubManager.RegisterDeviceToCloudAsync(deviceId);
                 InputText = null;
                 ShowMessage(MessageStatus.Success);
             }
@@ -127,6 +127,5 @@ public partial class SettingsViewModel : ObservableObject
         AddDeviceStatusMessage = string.Empty;
         _timer.Stop();
     }
-    
     
 }

@@ -31,25 +31,25 @@
                                     <Grid>
                                         <StackPanel>
                                             <TextBlock Text="{Binding DeviceInfo.Icon, FallbackValue=&#xf2db;}"
-                                                       Margin="0 0 0 10"
-                                                       FontFamily="{StaticResource FontAwesome-Regular}"
-                                                       FontSize="80"
-                                                       Foreground="#EEEEEE"
-                                                       VerticalAlignment="Center"
-                                                       HorizontalAlignment="Center"/>
+                                                        Margin="0 0 0 10"
+                                                        FontFamily="{StaticResource FontAwesome-Regular}"
+                                                        FontSize="80"
+                                                        Foreground="#EEEEEE"
+                                                        VerticalAlignment="Center"
+                                                        HorizontalAlignment="Center"/>
                                             
                                             <TextBlock Text="{Binding DeviceInfo.Location, FallbackValue=UnknownDevice}"
-                                                       HorizontalAlignment="Center"
-                                                       VerticalAlignment="Center"
-                                                       Margin="0 0 0 5"
-                                                       FontSize="18"
-                                                       FontWeight="Medium"
-                                                       Foreground="LawnGreen"/>
-                                            
-                                            <TextBlock Text="{Binding State, FallbackValue=UnknownState}"
-                                                       HorizontalAlignment="Center"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Margin="0 0 0 5"
+                                                        FontSize="18"
                                                         FontWeight="Medium"
-                                                       FontSize="15"
+                                                        Foreground="LawnGreen"/>
+
+                                            <TextBlock x:Name="showstate" Text="{Binding DeviceInfo.State, FallbackValue=UnknownState}"
+                                                        HorizontalAlignment="Center"
+                                                        FontWeight="Medium"
+                                                        FontSize="15"
                                                         VerticalAlignment="Center"
                                                         Foreground="Yellow"/>
                                         </StackPanel>
