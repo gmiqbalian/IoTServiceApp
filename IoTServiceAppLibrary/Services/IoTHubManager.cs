@@ -1,7 +1,10 @@
-﻿using IoTServiceAppLibrary.Models;
+﻿using IoTServiceAppLibrary.Contexts;
+using IoTServiceAppLibrary.Models;
 using Microsoft.Azure.Devices;
 using Microsoft.Azure.Devices.Client;
 using Microsoft.Azure.Devices.Shared;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System.Data;
 using System.Diagnostics;
@@ -11,23 +14,67 @@ namespace IoTServiceAppLibrary.Services;
 
 public class IoTHubManager
 {
-    private readonly RegistryManager _registryManager;
-    private readonly ServiceClient? _serviceClient;
-    private readonly string _connectionString = "HostName=kyh-iothub-gm.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=29hqWHz6b0gRxP/Oyo5q7rTahDG6r6sssAIoTDmJCmg=";
+    private RegistryManager? _registryManager;
+    private ServiceClient? _serviceClient;
+    //private string _iotHubConnectionString = "HostName=kyh-iothub-gm.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=29hqWHz6b0gRxP/Oyo5q7rTahDG6r6sssAIoTDmJCmg=";
+    private string? IotHubConnectionString { get; set; }
     private SystemTimer? _timer;
+    private readonly DataContext _dbcontext;
+    private readonly IConfiguration _configuration;
     public List<DeviceInfo> DeviceList { get; private set; }
     public event Action? DeviceListUpdated;
-    public IoTHubManager()
+    public IoTHubManager(DataContext dbcontext, IConfiguration configuration)
     {
-        _registryManager = RegistryManager.CreateFromConnectionString(_connectionString);
-        _serviceClient = ServiceClient.CreateFromConnectionString(_connectionString);
+        _configuration = configuration;
+        _dbcontext = dbcontext;
         DeviceList = new List<DeviceInfo>();
 
-        Task.Run(GetAllDevicesFromCloudAsync);
+        Task.WhenAll(LoadSettingsFromDatabase(),
+            GetAllDevicesFromCloudAsync());
 
         _timer = new System.Timers.Timer(1000);
         _timer.Elapsed += async (s, e) => await GetAllDevicesFromCloudAsync();
         _timer.Start();
+    }
+    public async Task LoadSettingsFromDatabase()
+    {
+        var appSettings = await _dbcontext.AppSettings.FirstOrDefaultAsync();
+        
+        if (appSettings is not null)
+            IotHubConnectionString = appSettings.IotHubConnectionString!;
+        else
+        {
+            appSettings ??= new AppSettings();
+            appSettings.IotHubConnectionString = _configuration
+                .GetConnectionString("iotHubConnectionString");
+            appSettings.WeatherUpateInterval = 60000 * 5;
+            appSettings.WeatherApiUrl = _configuration.GetConnectionString("weatherUrl");
+
+            await _dbcontext.AppSettings.AddAsync(appSettings);
+            await _dbcontext.SaveChangesAsync();
+            
+            IotHubConnectionString = appSettings.IotHubConnectionString;
+        }
+        
+        _registryManager = RegistryManager.CreateFromConnectionString(IotHubConnectionString);
+        _serviceClient = ServiceClient.CreateFromConnectionString(IotHubConnectionString);
+    }
+    public async Task<bool> UpdateSettingsInDataBase(string connectionString, string tempUrl, int tempLoadTime)
+    {
+        var appSettings = await _dbcontext.AppSettings.FirstOrDefaultAsync();
+        if (appSettings is not null)
+        {
+            appSettings.IotHubConnectionString = connectionString ?? appSettings.IotHubConnectionString;
+            appSettings.WeatherApiUrl = tempUrl ?? appSettings.WeatherApiUrl;
+
+            if (tempLoadTime > 0)
+                appSettings.WeatherUpateInterval = tempLoadTime;
+
+            _dbcontext.AppSettings.Update(appSettings);
+            _dbcontext.SaveChanges();
+            return true;
+        }
+        return false;
     }
     public async Task GetAllDevicesFromCloudAsync()
     {
@@ -72,7 +119,6 @@ public class IoTHubManager
         }
         catch (Exception ex) { Debug.WriteLine(ex.Message); }
     }
-
     private void UpdateTwinAsync(List<Twin> twinList)
     {
         foreach (var device in DeviceList)

@@ -27,10 +27,8 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- title -->
-                <TextBlock Grid.Column="0" Text="Smart Home" FontSize="50" 
-                   VerticalAlignment="Center"
-                   Margin="80 10 0 0"
-                   Foreground="White"/>
+                <TextBlock Grid.Column="0" Text="Smart Home" Style="{StaticResource PageTitle}"
+                   Margin="80 10 0 0"/>
 
                 <!-- go to settings button -->
                 <Button Grid.Column="1" Style="{StaticResource SettingsPage}" 

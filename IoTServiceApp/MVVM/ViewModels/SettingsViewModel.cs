@@ -35,9 +35,21 @@ public partial class SettingsViewModel : ObservableObject
 
     [ObservableProperty]
     private string? _inputText;
+    
+    [ObservableProperty]
+    private string? _iotHubConnectionStringUserinput;
+    
+    [ObservableProperty]
+    private string? _outsideTempUrlUserInput;
+    
+    [ObservableProperty]
+    private int _outsideTempUpdateFrequencyUserInput;
 
     [ObservableProperty]
-    private string? _addDeviceStatusMessage;
+    private string? _statusMessage;
+    
+    [ObservableProperty]
+    private string? _updateSettingsStatusMessage;
 
     public SettingsViewModel(IServiceProvider serviceProvider, IoTHubManager iotHubManager, HttpClient httpClient)
     {
@@ -46,7 +58,7 @@ public partial class SettingsViewModel : ObservableObject
         _httpClient = httpClient;
         _devices = new ObservableCollection<DeviceInfoViewModel>();
 
-        CurrentSection = new DeviceListControl(_serviceProvider.GetRequiredService<HomeViewModel>());
+        CurrentSection = _serviceProvider.GetRequiredService<DeviceListControl>();
 
         _timer = new DispatcherTimer();
         _timer.Interval = TimeSpan.FromSeconds(3);
@@ -106,24 +118,24 @@ public partial class SettingsViewModel : ObservableObject
     }
     private void ShowMessage(MessageStatus status)
     {
-        AddDeviceStatusMessage = string.Empty;
+        StatusMessage = string.Empty;
 
         switch (status)
         {
             case MessageStatus.Success:
-                AddDeviceStatusMessage = "Device added successfully!";
+                StatusMessage = "Device added successfully!";
                 break;
 
             case MessageStatus.Error:
-                AddDeviceStatusMessage = "Some error occurred.";
+                StatusMessage = "Some error occurred.";
                 break;
 
             case MessageStatus.Empty:
-                AddDeviceStatusMessage = "Device Id field is empty";
+                StatusMessage = "Device Id field is empty";
                 break;
 
             case MessageStatus.Duplicate:
-                AddDeviceStatusMessage = "Device Id already exists";
+                StatusMessage = "Device Id already exists";
                 break;
         }
 
@@ -131,7 +143,7 @@ public partial class SettingsViewModel : ObservableObject
     }
     private void Timer_Tick()
     {
-        AddDeviceStatusMessage = string.Empty;
+        StatusMessage = string.Empty;
         _timer.Stop();
     }
 
@@ -140,5 +152,24 @@ public partial class SettingsViewModel : ObservableObject
     {
         if (!string.IsNullOrEmpty(deviceId))
             await _iotHubManager.DeleteDeviceFromCloudAsync(deviceId);
+    }
+
+    [RelayCommand]
+    private async Task UpdateAppSettings()
+    {
+        var result = await _iotHubManager.UpdateSettingsInDataBase(
+            IotHubConnectionStringUserinput!,
+            OutsideTempUrlUserInput!,
+            OutsideTempUpdateFrequencyUserInput!);
+
+        if (result)
+            ShowMessage(MessageStatus.Success);
+        else ShowMessage(MessageStatus.Error);
+    }
+    [RelayCommand]
+    private void NavigateToAppSettingsSection()
+    {
+        CurrentSection = _serviceProvider
+            .GetRequiredService<SettingsSectionControl>();
     }
 }

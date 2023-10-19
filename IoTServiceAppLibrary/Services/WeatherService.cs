@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using IoTServiceAppLibrary.Contexts;
+using IoTServiceAppLibrary.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -13,22 +16,25 @@ namespace IoTServiceAppLibrary.Services
     public class WeatherService
     {
         private readonly HttpClient _httpClient;
-        private readonly string _outsideTempUrl;
+        private string? _outsideTempUrl;
         private readonly SystemTimer _timer;
+        private readonly DataContext _dbcontext;
+        private double? _weatherDataInterval;
         private readonly IConfiguration _configuration;
         public string? OutsideTemp { get; set; }
         public string? WeatherIcon { get; set; }
         public event Action? WeatheUpdated;
-        public WeatherService(HttpClient httpClient, IConfiguration configuration)
+        public WeatherService(HttpClient httpClient, IConfiguration configuration, DataContext dbcontext)
         {
             _httpClient = httpClient;
             _configuration = configuration;
-            _outsideTempUrl = _configuration.GetConnectionString("weatherUrl")!;
+            _dbcontext = dbcontext;
 
-            Task.Run(GetWeatherDataAsync);
+            //Task.Run(GetWeatherDataAsync);
+            Task.FromResult(GetWeatherDataAsync());
 
-            _timer = new System.Timers.Timer(60000 * 15);
-            _timer.Elapsed += (s, e) => GetWeatherDataAsync();
+            _timer = new System.Timers.Timer(Convert.ToDouble(_weatherDataInterval));
+            _timer.Elapsed += async (s, e) => await GetWeatherDataAsync();
             _timer.Start();
 
         }
@@ -36,11 +42,16 @@ namespace IoTServiceAppLibrary.Services
         {
             try
             {
+                var currentAppSettings = await _dbcontext.AppSettings.FirstOrDefaultAsync();
+
+                _outsideTempUrl = currentAppSettings!.WeatherApiUrl!;
+                _weatherDataInterval = (currentAppSettings!.WeatherUpateInterval <= 0 ) ? currentAppSettings.WeatherUpateInterval : 60000 * 1;
+
                 var response = await _httpClient
                     .GetStringAsync(_outsideTempUrl);
                 var tempratureData = JsonConvert.DeserializeObject<dynamic>(response);
 
-                OutsideTemp = tempratureData?.main.temp.ToString("#");
+                OutsideTemp = Convert.ToDouble(tempratureData?.main.temp).ToString();
                 WeatherIcon = GetWeatherIcon(tempratureData?.weather[0].description.ToString());
             }
             catch (Exception ex)
@@ -55,7 +66,7 @@ namespace IoTServiceAppLibrary.Services
 
         }
 
-        private string? GetWeatherIcon(string condition)
+        private static string? GetWeatherIcon(string condition)
         {
             return condition switch
             {
@@ -68,6 +79,7 @@ namespace IoTServiceAppLibrary.Services
                 "thunderstorm" => "\uf76c",
                 "snow" => "\uf742",
                 "mist" => "\uf74e",
+                "light snow" => "\uf2dc",
                 "overcast clouds" => "\uf744",
                 _ => "\ue137",
             };

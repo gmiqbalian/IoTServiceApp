@@ -21,27 +21,16 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <!-- title -->
-                    <Grid Grid.Row="0">
-                        <TextBlock Text="{Binding Title}"
-                            Margin="30 20 0 0"
-                            Foreground="White"
-                            FontSize="30"/>
-                    </Grid>
-
-                    <!-- settings changeable section -->
-                    <Grid Grid.Row="1">
+                    <Grid Margin="60 30 0 0">
                         <ContentControl x:Name="SettingsContent" Content="{Binding CurrentSection}">
                             <ContentControl.Resources>
                                 <DataTemplate DataType="{x:Type controls:AddDeviceControl}">
                                     <views:SettingsView/>
                                 </DataTemplate>
                                 <DataTemplate DataType="{x:Type controls:DeviceListControl}">
+                                    <views:SettingsView/>
+                                </DataTemplate>
+                                <DataTemplate DataType="{x:Type controls:SettingsSectionControl}">
                                     <views:SettingsView/>
                                 </DataTemplate>
                             </ContentControl.Resources>
@@ -67,7 +56,7 @@
                         <StackPanel VerticalAlignment="Bottom" Grid.Row="1">
                             <Button Style="{StaticResource AddButton}" Command="{Binding NavigateToAddDeviceSectionCommand}"/>
                             <Button Style="{StaticResource MenuButton}" Command="{Binding NavigateToDeviceListSectionCommand}"/>
-                            <Button Style="{StaticResource SettingsButton}"/>
+                            <Button Style="{StaticResource SettingsButton}" Command="{Binding NavigateToAppSettingsSectionCommand}"/>
                             <Button Style="{StaticResource PowerOffButton}" Command="{Binding ExitAppCommand}"/>
                         </StackPanel>
                     </Grid>
