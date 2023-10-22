@@ -11,6 +11,15 @@
     
     
     <Grid Margin="20">
+        <Grid.Style>
+            <Style TargetType="Grid">
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect ShadowDepth="1" BlurRadius="15" Opacity="0.75" />
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Grid.Style>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>

@@ -16,7 +16,6 @@ public class IoTHubManager
 {
     private RegistryManager? _registryManager;
     private ServiceClient? _serviceClient;
-    //private string _iotHubConnectionString = "HostName=kyh-iothub-gm.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=29hqWHz6b0gRxP/Oyo5q7rTahDG6r6sssAIoTDmJCmg=";
     private string? IotHubConnectionString { get; set; }
     private SystemTimer? _timer;
     private readonly DataContext _dbcontext;
@@ -81,7 +80,7 @@ public class IoTHubManager
         try
         {
             var twinList = new List<Twin>();
-            var query = _registryManager.CreateQuery("SELECT * FROM devices");
+            var query = _registryManager!.CreateQuery("SELECT * FROM devices");
 
             if (query.HasMoreResults)
                 foreach (var twin in await query.GetNextAsTwinAsync())
@@ -99,14 +98,11 @@ public class IoTHubManager
 
                 var device = DeviceList.FirstOrDefault(x => x.Id == twin.DeviceId);
 
-                if (twin.Properties.Reported.Count > 0)
-                {
-                    device!.Name = twin.Properties.Reported["deviceName"].ToString();
-                    device.Location = twin.Properties.Reported["location"].ToString();
-                    device.Type = twin.Properties.Reported["deviceType"].ToString();
-                    device.State = twin.Properties.Reported["state"].ToString();
-                    device.ConnectionState = twin.ConnectionState.ToString()!;
-                }
+                device!.ConnectionState = twin.ConnectionState.ToString()!;
+                device!.Name = twin.Properties.Reported.Contains("deviceName") ? twin.Properties.Reported["deviceName"] : "";
+                device!.Location = twin.Properties.Reported.Contains("location") ? twin.Properties.Reported["location"] : "";
+                device!.Type = twin.Properties.Reported.Contains("deviceType") ? twin.Properties.Reported["deviceType"] : "";
+                device!.State = twin.Properties.Reported.Contains("state") ? twin.Properties.Reported["state"] : "";
             }
 
             for (int i = DeviceList.Count - 1; i >= 0; i--)
@@ -118,23 +114,6 @@ public class IoTHubManager
             DeviceListUpdated?.Invoke();
         }
         catch (Exception ex) { Debug.WriteLine(ex.Message); }
-    }
-    private void UpdateTwinAsync(List<Twin> twinList)
-    {
-        foreach (var device in DeviceList)
-        {
-            foreach (Twin twin in twinList)
-            {
-                if (device.Id == twin.DeviceId)
-                {
-                    device.Name = twin.Properties.Reported["deviceName"].ToString();
-                    device.Location = twin.Properties.Reported["location"].ToString();
-                    device.Type = twin.Properties.Reported["deviceType"].ToString();
-                    device.State = twin.Properties.Reported["state"].ToString();
-                    device.ConnectionState = twin.ConnectionState.ToString()!;
-                }
-            }
-        }
     }
     public async Task<Device> GetDeviceFromCloudAsync(string deviceId)
     {
@@ -181,4 +160,6 @@ public class IoTHubManager
             Debug.WriteLine(ex.Message);
         }
     }
+
+
 }

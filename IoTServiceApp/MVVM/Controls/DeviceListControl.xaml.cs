@@ -25,7 +25,7 @@ namespace IoTServiceApp.MVVM.Controls
 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Delete_Button_Clicked(object sender, RoutedEventArgs e)
         {
             var button = (Button)sender;
             var device = (DeviceInfoViewModel)button.DataContext;

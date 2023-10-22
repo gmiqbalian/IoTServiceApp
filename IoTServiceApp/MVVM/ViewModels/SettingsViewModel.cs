@@ -25,7 +25,6 @@ public partial class SettingsViewModel : ObservableObject
     private readonly IoTHubManager _iotHubManager;
     private readonly HttpClient _httpClient;
     private DispatcherTimer _timer;
-    public readonly string Title = "Settings";
 
     [ObservableProperty]
     private ObservableCollection<DeviceInfoViewModel> _devices;
@@ -34,22 +33,19 @@ public partial class SettingsViewModel : ObservableObject
     private Control _currentSection;
 
     [ObservableProperty]
-    private string? _inputText;
-    
+    private string? _deviceIdUserInput;
+
     [ObservableProperty]
     private string? _iotHubConnectionStringUserinput;
-    
+
     [ObservableProperty]
     private string? _outsideTempUrlUserInput;
-    
+
     [ObservableProperty]
     private int _outsideTempUpdateFrequencyUserInput;
 
     [ObservableProperty]
     private string? _statusMessage;
-    
-    [ObservableProperty]
-    private string? _updateSettingsStatusMessage;
 
     public SettingsViewModel(IServiceProvider serviceProvider, IoTHubManager iotHubManager, HttpClient httpClient)
     {
@@ -73,7 +69,7 @@ public partial class SettingsViewModel : ObservableObject
         CurrentSection = _serviceProvider.GetRequiredService<DeviceListControl>();
     }
     [RelayCommand]
-    private void ExitApp()
+    private static void ExitApp()
     {
         Environment.Exit(0);
     }
@@ -88,28 +84,28 @@ public partial class SettingsViewModel : ObservableObject
         CurrentSection = _serviceProvider.GetRequiredService<DeviceListControl>();
     }
     [RelayCommand]
-    private async Task AddDevice()
-    {        
-        var deviceId = InputText;
+    private async Task AddDeviceToCloud()
+    {
+        var deviceId = DeviceIdUserInput;
 
         if (!string.IsNullOrEmpty(deviceId))
         {
-            var device = await _iotHubManager.GetDeviceFromCloudAsync(deviceId);
-            if (device is not null)
-            {
-                ShowMessage(MessageStatus.Duplicate);
-                return;
-            }
-
             try
             {
+                var device = await _iotHubManager.GetDeviceFromCloudAsync(deviceId);
+                if (device is not null)
+                {
+                    ShowMessage(MessageStatus.Duplicate);
+                    return;
+                }
+
                 await _iotHubManager.RegisterDeviceToCloudAsync(deviceId);
-                InputText = null;
+                DeviceIdUserInput = null;
                 ShowMessage(MessageStatus.Success);
             }
-            catch (Exception ex) 
-            { 
-                Debug.WriteLine(ex.Message); 
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
                 ShowMessage(MessageStatus.Error);
             }
         }
@@ -123,7 +119,7 @@ public partial class SettingsViewModel : ObservableObject
         switch (status)
         {
             case MessageStatus.Success:
-                StatusMessage = "Device added successfully!";
+                StatusMessage = "Executed successfully!";
                 break;
 
             case MessageStatus.Error:
@@ -131,7 +127,7 @@ public partial class SettingsViewModel : ObservableObject
                 break;
 
             case MessageStatus.Empty:
-                StatusMessage = "Device Id field is empty";
+                StatusMessage = "Some field is/are empty";
                 break;
 
             case MessageStatus.Duplicate:
@@ -157,6 +153,15 @@ public partial class SettingsViewModel : ObservableObject
     [RelayCommand]
     private async Task UpdateAppSettings()
     {
+        if (IotHubConnectionStringUserinput is null &&
+            OutsideTempUrlUserInput is null &&
+            OutsideTempUpdateFrequencyUserInput == 0)
+        {
+            ShowMessage(MessageStatus.Empty);
+            return;
+        }
+
+
         var result = await _iotHubManager.UpdateSettingsInDataBase(
             IotHubConnectionStringUserinput!,
             OutsideTempUrlUserInput!,

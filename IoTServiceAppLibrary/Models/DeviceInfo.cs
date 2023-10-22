@@ -9,6 +9,7 @@ public partial class DeviceInfo
     public string? Type { get; set; } = string.Empty;
     public string? Location { get; set; } = string.Empty;
     public string? Icon => SetIcon();
+    public int TelemetryInterval { get; set; }
     public string State { get; set; } = string.Empty;
     public string ConnectionState { get; set; } = string.Empty;
 

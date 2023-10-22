@@ -17,52 +17,25 @@
         <StackPanel Grid.Row="1">
             <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Vertical">
-                    <Label Content="Device Id: " VerticalAlignment="Top" FontSize="20"/>
+                    <Label Content="Device Id: " 
+                           VerticalAlignment="Top" 
+                           Foreground="#dddddd"
+                           FontSize="20"/>
                     <TextBox x:Name="DeviceId"
+                             Text="{Binding DeviceIdUserInput}"
                             Style="{StaticResource TextBoxStyle}" 
-                             HorizontalAlignment="Left" 
-                             IsEnabled="False" 
                              VerticalAlignment="Bottom"/>
                 </StackPanel>
-                
-                <StackPanel Orientation="Vertical">
-                    <Label Content="Device Name: " 
+
+                <Button Style="{StaticResource AddDeviceButton}"
                         HorizontalAlignment="Left"
-                        FontSize="20"/>
-                    <TextBox x:Name="DeviceName" 
-                             Style="{StaticResource TextBoxStyle}" 
-                             Text="{Binding InputText}"/>
-                </StackPanel>
-                
-                <StackPanel Orientation="Vertical">
-                    <Label Content="Location: " 
-                        HorizontalAlignment="Left"
-                        FontSize="20"/>
-                    <TextBox x:Name="DeviceLocation" 
-                             Style="{StaticResource TextBoxStyle}" 
-                             Text="{Binding InputText}"/>
-                </StackPanel>
-                
-                <StackPanel Orientation="Vertical">
-                    <Label Content="Type: " 
-                        HorizontalAlignment="Left"
-                        FontSize="20"/>
-                    <TextBox x:Name="DeviceType" 
-                             Style="{StaticResource TextBoxStyle}" 
-                             Text="{Binding InputText}"/>
-                </StackPanel>
-                
-                <StackPanel Orientation="Horizontal" 
-                        HorizontalAlignment="Left">
+                        Command="{Binding AddDeviceToCloudCommand}"/>
                     
-                    <Button Style="{StaticResource AddDeviceButton}" 
-                            Command="{Binding AddDeviceCommand}"/>
-                    
-                </StackPanel>
                 <TextBlock x:Name="MessageBox" 
-                           Text="{Binding AddDeviceStatusMessage}"
-                           HorizontalAlignment="Center"
-                           FontSize="20" Foreground="White" />
+                           Text="{Binding StatusMessage}"
+                           HorizontalAlignment="Left"
+                           Margin="0 30 0 0"
+                           FontSize="20" Foreground="#ffffff" />
             </StackPanel>
         </StackPanel>
     </Grid>

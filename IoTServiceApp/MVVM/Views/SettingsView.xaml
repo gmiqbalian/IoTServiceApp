@@ -11,7 +11,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1280">
     <Grid>
-        <Rectangle Fill="CornflowerBlue"/>
+        <Rectangle Fill="Black" Opacity="0.80"/>
         <Grid>
 
             <Grid>
@@ -39,7 +39,7 @@
                 </Grid>
 
 
-                <Grid Grid.Column="1" Background="DarkBlue">
+                <Grid Grid.Column="1" Background="#3f3f40">
                     <Grid Margin="20">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"/>

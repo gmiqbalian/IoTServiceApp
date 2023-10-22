@@ -7,7 +7,7 @@
         <Setter Property="Background" Value="#2d2d2e" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Width" Value="200" />
-        <Setter Property="Height" Value="190" />
+        <Setter Property="Height" Value="200" />
         <Setter Property="Margin" Value="10 0 10 0" />
         <Setter Property="Padding" Value="10" />
         <Setter Property="Opacity" Value="0.80"/>
@@ -32,7 +32,7 @@
                                         <StackPanel>
                                             <TextBlock Text="{Binding DeviceInfo.Icon, FallbackValue=&#xf2db;}"
                                                         Margin="0 0 0 10"
-                                                        FontFamily="{StaticResource FontAwesome-Regular}"
+                                                        FontFamily="{StaticResource FontAwesome-Light}"
                                                         FontSize="80"
                                                         Foreground="#EEEEEE"
                                                         VerticalAlignment="Center"
@@ -45,11 +45,19 @@
                                                         FontSize="18"
                                                         FontWeight="Medium"
                                                         Foreground="LawnGreen"/>
+                                            
+                                            <TextBlock Text="{Binding DeviceInfo.ConnectionState, FallbackValue=UnknownDevice}"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Margin="0 0 0 5"
+                                                        FontSize="12"
+                                                        FontWeight="Medium"
+                                                        Foreground="Orange"/>
 
                                             <TextBlock x:Name="showstate" Text="{Binding DeviceInfo.State, FallbackValue=UnknownState}"
                                                         HorizontalAlignment="Center"
                                                         FontWeight="Medium"
-                                                        FontSize="15"
+                                                        FontSize="16"
                                                         VerticalAlignment="Center"
                                                         Foreground="Yellow"/>
                                         </StackPanel>
@@ -65,6 +73,7 @@
                         </Trigger>
                         <DataTrigger Binding="{Binding DeviceInfo.State}" Value="ON">
                             <Setter TargetName="buttonBorder" Property="Background" Value="#61615f" />
+                            <Setter TargetName="buttonBorder" Property="Opacity" Value="1"/>
                         </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

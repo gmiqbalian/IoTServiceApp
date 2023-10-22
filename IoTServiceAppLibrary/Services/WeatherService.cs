@@ -51,7 +51,7 @@ namespace IoTServiceAppLibrary.Services
                     .GetStringAsync(_outsideTempUrl);
                 var tempratureData = JsonConvert.DeserializeObject<dynamic>(response);
 
-                OutsideTemp = Convert.ToDouble(tempratureData?.main.temp).ToString();
+                OutsideTemp = Convert.ToDouble(tempratureData?.main.temp).ToString("#");
                 WeatherIcon = GetWeatherIcon(tempratureData?.weather[0].description.ToString());
             }
             catch (Exception ex)

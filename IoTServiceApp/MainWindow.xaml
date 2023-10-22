@@ -7,6 +7,10 @@
         xmlns:viewmodels="clr-namespace:IoTServiceApp.MVVM.ViewModels"
         xmlns:views="clr-namespace:IoTServiceApp.MVVM.Views"
         mc:Ignorable="d"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Normal"
+        MouseDown="Window_MouseDown"
         Title="MainWindow" Height="720" Width="1280">
     <Grid>
         <Image Source="Assets/Images/background.jpg"

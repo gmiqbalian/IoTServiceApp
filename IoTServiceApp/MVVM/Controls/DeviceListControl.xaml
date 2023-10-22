@@ -28,22 +28,27 @@
                     <Grid>
                         <StackPanel Margin="0 0 50 30">
                             <TextBlock Style="{StaticResource TextDetail}">
-                                <Run Text="Id: "/>
-                                <Run Text="{Binding DeviceInfo.Id}"/>
-                            </TextBlock>
-                            <TextBlock Style="{StaticResource TextDetail}">
-                                <Run Text="Name: "/>
+                                <Run Text="Name: " Style="{StaticResource TextLabel}"/>
                                 <Run Text="{Binding DeviceInfo.Name}"/>
                             </TextBlock>
                             <TextBlock Style="{StaticResource TextDetail}">
-                                <Run Text="Type: "/>
+                                <Run Text="Connection: " Style="{StaticResource TextLabel}"/>
+                                <Run Text="{Binding DeviceInfo.ConnectionState}"/>
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource TextDetail}">
+                                <Run Text="State: " Style="{StaticResource TextLabel}"/>
+                                <Run Text="{Binding DeviceInfo.State}"/>
+                            </TextBlock>
+                            <TextBlock Style="{StaticResource TextDetail}">
+                                <Run Text="Type: " Style="{StaticResource TextLabel}"/>
                                 <Run Text="{Binding DeviceInfo.Type}"/>
                             </TextBlock>
                             <TextBlock Style="{StaticResource TextDetail}">
-                                <Run Text="Location: "/>
+                                <Run Text="Location: " Style="{StaticResource TextLabel}"/>
                                 <Run Text="{Binding DeviceInfo.Location}"/>
                             </TextBlock>
-                            <Button Click="Button_Click"
+                            
+                            <Button Click="Delete_Button_Clicked"
                                     Margin="0 20 0 10"
                                     Style="{StaticResource DeleteDeviceButton}"
                                     CommandParameter="{Binding DeviceInfo.Id}"/>
